@@ -1,0 +1,12 @@
+{
+  "name": "hupdater",
+  "version": "1.4.2",
+  "description": "updater for nwjs client",
+  "keywords": "node-webkit nw.js client update",
+  "main": "updater.js",
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "request": "^2.73.0",
+    "semver": "^5.2.0"
+  }
+}
