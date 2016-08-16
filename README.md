@@ -1,4 +1,9 @@
 ## nw.js 客户端更新模块
+## 安装
+```
+    npm install hupdater
+```
+
 ## 主要API
 
 ### restartApp(App)
