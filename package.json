@@ -1,6 +1,6 @@
 {
   "name": "hupdater",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "updater for nwjs client",
   "keywords": "node-webkit nw.js client update",
   "main": "updater.js",
