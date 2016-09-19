@@ -98,12 +98,16 @@ exports.downloadNewVersion = function(url, toUrl, cb) {
  * @param cb
  */
 exports.unpackNewVersion = function(filePath, cb){
-    var zip = new admZip(filePath);
-    var dir = path.dirname(filePath);
-    zip.extractAllTo(dir, true);
-    fs.unlink(filePath, function(){
-        cb();
-    });
+    try{
+        var zip = new admZip(filePath);
+        var dir = path.dirname(filePath);
+        zip.extractAllTo(dir, true);
+        fs.unlink(filePath, function(){
+            cb();
+        });
+    }catch(e){
+        cb(e.message);
+    }
 }
 
 /**
