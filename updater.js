@@ -59,37 +59,14 @@ exports.ifNeedUpdate = function(localVersion, latestVersion){
  * @param cb
  */
 exports.downloadNewVersion = function(url, toUrl, cb) {
-    var pkg = request(url, function(err, response){
-        if(err){
-            cb(err);
-        }
-        if(response && (response.statusCode < 200 || response.statusCode >= 300)){
-            pkg.abort();
-            return cb(new Error(response.statusCode));
-        }
+    var downloadApi = url;
+    var filePath = toUrl;
+    var stream = fs.createWriteStream(filePath);
+    request(downloadApi).pipe(stream).on('close', function() {
+        cb();
+    }).on('error', function(err) {
+        cb(err);
     });
-    pkg.on('response', function(response){
-        if(response && response.headers && response.headers['content-length']){
-            pkg['content-length'] = response.headers['content-length'];
-        }
-    });
-    var filename = path.basename(url);
-    var destinationPath = path.join(toUrl, filename);
-
-    fs.unlink(destinationPath, function(){
-        pkg.pipe(fs.createWriteStream(destinationPath));
-        pkg.resume();
-    });
-    pkg.on('error', cb);
-    pkg.on('end', function () {
-        process.nextTick(function(){
-            if(pkg.response.statusCode >= 200 && pkg.response.statusCode < 300){
-                cb(null, destinationPath);
-            }
-        });
-    });
-    pkg.pause();
-    return pkg;
 }
 
 /**
